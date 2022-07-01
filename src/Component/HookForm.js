@@ -5,7 +5,7 @@ import { useForm } from 'react-hook-form';
 const HookForm = ({ handleAddBill }) => {
     const { register, formState: { errors }, handleSubmit } = useForm();
     const onSubmit = data => {
-        fetch('http://localhost:5000/api/billing-list', {
+        fetch('http://localhost:5000/api/add-billing', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -104,7 +104,7 @@ const HookForm = ({ handleAddBill }) => {
                     </label>
                     <input
                         type="Number"
-                        placeholder="Type Your Phone Number here"
+                        placeholder="Type Your Paid Amount"
                         class="input input-bordered input-sm w-full max-w-xs"
                         {...register("paid", {
                             required: {
