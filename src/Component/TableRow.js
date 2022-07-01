@@ -1,30 +1,39 @@
 import React, { useEffect, useState } from 'react';
 import DeleteModal from './DeleteModal';
+import UpdateBill from './UpdateBill';
 
-const TableRow = ({ loadBill }) => {
+const TableRow = ({ loadBill, setTotalPaid, setLoadBill }) => {
     const [allBills, setAllBills] = useState([]);
+    const [totalBill, setTotalBill] = useState([]);
     const [pageNumber, setPageNumber] = useState(0);
     const [pageCount, setPageCount] = useState(0);
     const [deleteBill, setDeleteBill] = useState(null);
-    const limit = 5;
+    const [updateBill, setUpdateBill] = useState(null);
+    const limit = 10;
 
     useEffect(() => {
-        fetch(`https://quiet-peak-88079.herokuapp.com/api/billing-list?limit=${limit}&pageNumber=${pageNumber}`, {
+        fetch(`http://localhost:5000/api/billing-list?limit=${limit}&pageNumber=${pageNumber}`, {
             method: 'GET'
         }).then(res => res.json()).then(data => {
 
-            console.log(data.data);
+            console.log(data);
             setAllBills(data.data);
+            setTotalBill(data.billing);
             setPageCount(Math.ceil(data.count / limit));
 
         })
 
 
     }, [pageNumber, loadBill, setAllBills]);
+    let sum = 0;
+    totalBill.map(item => sum = sum + parseInt(item.paid))
+    console.log(sum);
+    setTotalPaid(sum);
 
 
     return (
         <div>
+
             <div class="overflow-x-auto mt-5">
                 <table class="table table-zebra w-full">
                     <thead>
@@ -44,10 +53,10 @@ const TableRow = ({ loadBill }) => {
                                 <td>{bill.name}</td>
                                 <td>{bill.email}</td>
                                 <td>{bill.phone}</td>
-                                <td>{bill.paid}</td>
+                                <td>${bill.paid}</td>
                                 <td>
-                                    <button
-                                        className='btn btn-xs btn-primary mr-2'>Edit</button> |
+                                    <label onClick={() => setUpdateBill(bill)} for="update-bill"
+                                        class="btn btn-xs btn-primary mr-2">Edit</label> |
                                     <label onClick={() => setDeleteBill(bill)} for="delete-bill" class="btn btn-xs btn-error ml-2">Delete</label>
                                 </td>
                             </tr>)
@@ -69,8 +78,22 @@ const TableRow = ({ loadBill }) => {
                     setDeleteBill={setDeleteBill}
                     allBills={allBills}
                     setAllBills={setAllBills}
+                    loadBill={loadBill}
+                    setLoadBill={setLoadBill}
                 ></DeleteModal>
             }
+
+            {
+                updateBill && <UpdateBill
+                    updateBill={updateBill}
+                    setUpdateBill={setUpdateBill}
+                    allBills={allBills}
+                    setAllBills={setAllBills}
+                    loadBill={loadBill}
+                    setLoadBill={setLoadBill}
+                ></UpdateBill>
+            }
+
 
         </div>
     );

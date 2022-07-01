@@ -1,6 +1,6 @@
 import React from 'react';
 
-const DeleteModal = ({ allBills, setDeleteBill, deleteBill, setAllBills }) => {
+const DeleteModal = ({ allBills, setDeleteBill, deleteBill, setAllBills, loadBill, setLoadBill }) => {
     const { _id, name } = deleteBill;
 
     const handleDelete = (id) => {
@@ -16,6 +16,7 @@ const DeleteModal = ({ allBills, setDeleteBill, deleteBill, setAllBills }) => {
             .then(remaingData => {
                 const remaining = allBills.filter(bills => bills._id !== id);
                 setAllBills(remaining);
+                setLoadBill(loadBill + 1)
                 setDeleteBill(null);
             })
 
