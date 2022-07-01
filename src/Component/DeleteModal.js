@@ -4,7 +4,7 @@ const DeleteModal = ({ allBills, setDeleteBill, deleteBill, setAllBills }) => {
     const { _id, name } = deleteBill;
 
     const handleDelete = (id) => {
-        const url = `http://localhost:5000/api/delete-billing/${id}`;
+        const url = `https://quiet-peak-88079.herokuapp.com/api/delete-billing/${id}`;
         fetch(url, {
             method: 'DELETE',
             headers: {

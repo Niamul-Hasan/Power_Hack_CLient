@@ -9,7 +9,7 @@ const TableRow = ({ loadBill }) => {
     const limit = 5;
 
     useEffect(() => {
-        fetch(`http://localhost:5000/api/billing-list?limit=${limit}&pageNumber=${pageNumber}`, {
+        fetch(`https://quiet-peak-88079.herokuapp.com/api/billing-list?limit=${limit}&pageNumber=${pageNumber}`, {
             method: 'GET'
         }).then(res => res.json()).then(data => {
 

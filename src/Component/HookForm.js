@@ -5,7 +5,7 @@ import { useForm } from 'react-hook-form';
 const HookForm = ({ handleAddBill }) => {
     const { register, formState: { errors }, handleSubmit } = useForm();
     const onSubmit = data => {
-        fetch('http://localhost:5000/api/add-billing', {
+        fetch('https://quiet-peak-88079.herokuapp.com/api/add-billing', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
